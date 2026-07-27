@@ -22,3 +22,15 @@ monedas: 0
 llaves: 0
 vida: 6
 
+nombre: Arlek
+edad: 05/09/1990
+grado: 2
+skin: 0
+cabello: 1
+camisa: 6
+ojos: 2
+femenino: false
+monedas: 0
+llaves: 0
+vida: 6
+

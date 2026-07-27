@@ -10,20 +10,12 @@ import unl.edu.ec.ama.data.entity.EspecialistaEntity;
 
 import java.util.Optional;
 
-/**
- * Lógica de negocio para el acceso y registro de especialistas.
- * El hash/verificación de contraseñas se resuelve aquí con jBCrypt.
- */
 @ApplicationScoped
 public class EspecialistaService {
 
     @PersistenceContext(unitName = "jbrewPU")
     private EntityManager em;
 
-    /**
-     * Busca un especialista por su nombre de usuario O por su correo electrónico.
-     * Es la base del "login dual": el mismo campo del formulario sirve para ambos.
-     */
     public Optional<EspecialistaEntity> buscarPorUsuarioOEmail(String usuarioOEmail) {
         try {
             EspecialistaEntity especialista = em.createQuery(
@@ -38,9 +30,6 @@ public class EspecialistaService {
         }
     }
 
-    /**
-     * Verifica la contraseña en texto plano contra el hash almacenado en BD.
-     */
     public boolean verificarPassword(String passwordPlano, String passwordHash) {
         if (passwordPlano == null || passwordHash == null) {
             return false;
@@ -48,12 +37,6 @@ public class EspecialistaService {
         return BCrypt.checkpw(passwordPlano, passwordHash);
     }
 
-    /**
-     * Registra un nuevo especialista, hasheando la contraseña con BCrypt.
-     * Usado por RegistroBean.
-     *
-     * @throws EspecialistaExistenteException si el usuario o el email ya están registrados.
-     */
     @Transactional
     public EspecialistaEntity registrar(String nombreCompleto, String usuario, String email, String passwordPlano) {
         Long existentes = em.createQuery(

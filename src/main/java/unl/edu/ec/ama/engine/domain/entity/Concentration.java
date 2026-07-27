@@ -15,12 +15,11 @@ public class Concentration extends Test {
 
     private ConcentrationState state;
 
-    // LÍMITES DE LA ARENA EN EL MUNDO (Carril central frente al portal, Columnas 13 a 23)
     private int arenaMinCol = 13;
     private int arenaMaxCol = 23;
     private int playerMinX;
     private int playerMaxX;
-    private int playerFixedY; // Fila 11 del mapa (parte inferior del carril)
+    private int playerFixedY;
 
     // Lista de objetos cayendo
     private ArrayList<FallingObject> fallingObjects;
@@ -31,7 +30,6 @@ public class Concentration extends Test {
     private int spawnRate = 35; // Frecuencia inicial de obstáculos
     private int minSpawnRate = 15;
 
-    // Control de objeto objetivo
     private int targetSpawnCounter = 0;
     private int targetSpawnInterval = 110; // Frecuencia de manzanas doradas
 
@@ -65,16 +63,13 @@ public class Concentration extends Test {
         state = ConcentrationState.SETUP;
         fallingObjects.clear();
 
-        // 1. DEFINIR LÍMITES FÍSICOS DEL JUGADOR EN EL MAPA
         playerMinX = arenaMinCol * gp.tileSize;
         playerMaxX = (arenaMaxCol - 1) * gp.tileSize;
         playerFixedY = 11 * gp.tileSize; // Fila 11 (suelo de la arena)
 
-        // 2. TELETRANSPORTAR AL JUGADOR AL CENTRO DEL CARRIL
         gp.player.setWorldX(18 * gp.tileSize);
         gp.player.setWorldY(playerFixedY);
 
-        // 3. BLOQUEAR MOVIMIENTO NORMAL (Para que Player.java no lea W/S ni flechas verticales)
         gp.player.movementLocked = true;
 
         // Reiniciar métricas
@@ -149,9 +144,6 @@ public class Concentration extends Test {
         }
     }
 
-    /**
-     * Movimiento horizontal exclusivo tipo Arcade (Izquierda / Derecha)
-     */
     private void updatePlayerMovement() {
         int speed = 7; // Velocidad ágil para esquivar
 
@@ -249,9 +241,6 @@ public class Concentration extends Test {
         }
     }
 
-    /**
-     * Dibuja la Arena "Lluvia Digital" en 16-Bit Pixel Art
-     */
     public void drawArena(Graphics2D g2) {
         // 1. FONDO CYBER-DARK
         g2.setColor(new Color(10, 15, 25));
@@ -287,9 +276,6 @@ public class Concentration extends Test {
         drawHUD(g2);
     }
 
-    /**
-     * Interfaz Superior Estilo Arcade 16-Bit
-     */
     private void drawHUD(Graphics2D g2) {
         int panelWidth = 500;
         int panelHeight = 60;
@@ -331,9 +317,6 @@ public class Concentration extends Test {
         }
     }
 
-    /**
-     * Clase interna para Objetos Cayendo en Estilo 16-Bit Pixel Art
-     */
     private static class FallingObject {
         int worldX, worldY;
         boolean isTarget;
@@ -382,9 +365,6 @@ public class Concentration extends Test {
             }
         }
 
-        /**
-         * Sprite 16-Bit: Manzana Dorada Cibernética
-         */
         private void drawGoldenApple(Graphics2D g2, int x, int y) {
             // Brillo exterior parpadeante
             if (isFlashing) {
@@ -414,9 +394,6 @@ public class Concentration extends Test {
             g2.drawRect(x + (size/2) - 2, y - 4, 8, 6);
         }
 
-        /**
-         * Sprites 16-Bit para Obstáculos
-         */
         private void drawObstacle(Graphics2D g2, int x, int y) {
             switch (spriteType) {
                 case 0 -> { // ROCA ESPACIAL / METEORITO GRIS

@@ -24,10 +24,6 @@ public class UserSnapshot implements Serializable {
         this.schoolGrade = schoolGrade;
     }
 
-    /**
-     * Crea una copia segura de los datos de un usuario persistido.
-     * Se usa en GameService al mapear la entidad JPA hacia el DTO de vista.
-     */
     public static UserSnapshot from(User user) {
         if (user == null) {
             return null;

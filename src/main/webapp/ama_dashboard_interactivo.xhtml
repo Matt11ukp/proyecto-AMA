@@ -50,13 +50,10 @@
                             <span>Última eval: <h:outputText value="#{dashboardBean.pacienteUltimaEval}" /></span>
                             <span>|</span>
                             <span class="px-2 py-0.5 bg-tertiary text-white border border-on-background text-xs uppercase">
-                                Estado: <h:outputText value="#{dashboardBean.tieneEvaluaciones ? 'Completado' : 'Pendiente'}" />
-                            </span>
+                    Estado: <h:outputText value="#{dashboardBean.tieneEvaluaciones ? 'Completado' : 'Pendiente'}" />
+                </span>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <h:commandButton value="DESCARGAR PDF" class="bg-primary text-white border-2 border-on-background px-6 py-3 font-bold uppercase pixel-shadow cursor-pointer hover:bg-primary-container hover:text-on-primary-container transition-all"/>
                 </div>
             </header>
 

@@ -25,10 +25,6 @@ public class EspecialistaEntity implements Serializable {
     @Column(name = "email", length = 100)
     private String email;
 
-    /**
-     * Hash de la contraseña (ej. BCrypt). NUNCA se guarda en texto plano.
-     * La generación/verificación del hash se resuelve en {@code EspecialistaService}.
-     */
     @Column(name = "password_hash", length = 255, nullable = false)
     private String passwordHash;
 
