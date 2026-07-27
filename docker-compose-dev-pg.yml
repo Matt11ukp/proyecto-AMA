@@ -1,0 +1,88 @@
+services:
+  # Base de datos PostgreSQL
+  ama-pg-db:
+    image: postgres:${POSTGRES_VERSION}
+    restart: unless-stopped
+    container_name: ama-pg-db-container
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - ${DB_PGSQL_PORT_PUBLIC}:5432
+    volumes:
+      - ama-pg-data:/var/lib/postgresql
+    networks:
+      ama-pg-network:
+        ipv4_address: 172.21.0.251
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  ama-pg-adminer-db:
+    image: adminer
+    container_name: ama-pg-adminer-db-container
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    depends_on:
+      - ama-pg-db
+    networks:
+      ama-pg-network:
+        ipv4_address: 172.21.0.254
+
+  ama-view-pgadmin4:
+    container_name: ama-pgadmin4-container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "adminDB@postgres.org"
+      PGADMIN_DEFAULT_PASSWORD: "admin123"
+    ports:
+      - 81:80
+    depends_on:
+      - ama-pg-db
+    networks:
+      ama-pg-network:
+        ipv4_address: 172.21.0.253
+
+  # Servidor de aplicación Open Liberty
+  ama-web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ama-web-app-container
+    restart: unless-stopped
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "9080:9080"
+      - "9443:9443"
+    depends_on:
+      ama-pg-db:
+        condition: service_healthy
+    networks:
+      ama-pg-network:
+        ipv4_address: 172.21.0.250
+
+networks:
+  ama-pg-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/24
+
+volumes:
+  ama-pg-data:
+    name: ama-pg-data-local
+    driver: local
+    driver_opts:
+      type: none
+      device: ${LOCAL_DATA_DIR_BD}
+      o: bind

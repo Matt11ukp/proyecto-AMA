@@ -1,0 +1,105 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core">
+
+    <ui:param name="mostrarSidebar" value="false" />
+    <ui:param name="vistaActiva" value="registro" />
+    <ui:define name="title-view">AMA - Registro de Especialistas</ui:define>
+
+    <ui:define name="content">
+        <div class="min-h-screen flex items-center justify-center font-body-md text-on-surface py-12 px-4 relative overflow-x-hidden">
+            <main class="relative z-10 w-full max-w-md">
+
+                <!-- Título -->
+                <div class="flex justify-center mb-8">
+                    <h:link outcome="/ama_inicio.xhtml" styleClass="bg-primary-container pixel-border-4 pixel-shadow px-6 py-2 block">
+                        <h1 class="font-headline-lg text-3xl text-on-surface uppercase tracking-tighter font-bold">AMA</h1>
+                    </h:link>
+                </div>
+
+                <!-- Tarjeta de Registro -->
+                <div class="bg-surface-container-lowest pixel-border-4 pixel-shadow p-8 md:p-10 flex flex-col gap-8">
+
+                    <div class="border-b-2 border-on-surface pb-4">
+                        <h2 class="font-headline-md text-2xl text-primary font-bold">Registro de Especialista</h2>
+                    </div>
+
+                    <h:form id="registroForm" class="flex flex-col gap-6">
+
+                        <!-- Nombre Completo -->
+                        <div class="flex flex-col gap-2">
+                            <h:outputLabel for="nombre" class="font-label-sm text-sm uppercase font-bold">Nombre Completo</h:outputLabel>
+                            <h:inputText id="nombre" value="#{registroBean.nombre}" required="true"
+                                         class="w-full bg-surface pixel-border-2 pixel-input-recessed px-4 py-3 font-body-md"
+                                         placeholder="Ingrese su nombre completo" />
+                        </div>
+
+                        <!-- Usuario -->
+                        <div class="flex flex-col gap-2">
+                            <h:outputLabel for="usuario" class="font-label-sm text-sm uppercase font-bold">Usuario</h:outputLabel>
+                            <h:inputText id="usuario" value="#{registroBean.usuario}" required="true"
+                                         class="w-full bg-surface pixel-border-2 pixel-input-recessed px-4 py-3 font-body-md"
+                                         placeholder="Ingrese su usuario" />
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="flex flex-col gap-2">
+                            <h:outputLabel for="email" class="font-label-sm text-sm uppercase font-bold">Correo Electrónico (Opcional)</h:outputLabel>
+                            <h:inputText id="email" value="#{registroBean.email}"
+                                         class="w-full bg-surface pixel-border-2 pixel-input-recessed px-4 py-3 font-body-md"
+                                         placeholder="correo@unl.edu.ec" />
+                        </div>
+
+                        <!-- Contraseña con Botón de Ocultar/Ver -->
+                        <div class="flex flex-col gap-2">
+                            <h:outputLabel for="password" class="font-label-sm text-sm uppercase font-bold">Contraseña</h:outputLabel>
+                            <div class="ama-password-wrap relative flex items-center">
+                                <h:inputSecret id="password" value="#{registroBean.password}" required="true"
+                                               class="w-full bg-surface pixel-border-2 pixel-input-recessed px-4 py-3 pr-12 font-body-md"
+                                               placeholder="********" />
+                                <button type="button"
+                                        class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer select-none text-on-surface-variant hover:text-on-surface bg-transparent border-0 p-0"
+                                        style="font-size: 20px;"
+                                        onclick="amaTogglePassword(this)"
+                                        aria-label="Mostrar contraseña">visibility</button>
+                            </div>
+                        </div>
+
+                        <!-- Botón Registrarse -->
+                        <h:commandButton value="REGISTRARSE" action="#{registroBean.registrar}"
+                                         class="w-full mt-4 py-4 bg-[#D87A8E] text-white font-headline-md text-lg uppercase font-bold pixel-border-2 pixel-shadow cursor-pointer">
+                            <f:ajax execute="@form" render="@form" />
+                        </h:commandButton>
+
+                        <!-- Mensaje de Error en Rojo -->
+                        <h:messages globalOnly="true" showDetail="true" showSummary="false"
+                                    class="text-red-600 font-label-sm text-xs text-center border-2 border-red-600 p-2 bg-red-100 uppercase font-bold mt-4 w-full" />
+                    </h:form>
+
+                    <!-- Enlace para volver al login -->
+                    <div class="text-center pt-1 border-t-2 border-surface-container">
+                        <h:link outcome="/ama_acceso_especialistas.xhtml" styleClass="font-label-sm text-xs uppercase underline decoration-2 font-bold">
+                            ¿Ya tienes una cuenta? Inicia sesión aquí
+                        </h:link>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- Script del botón de contraseña -->
+        <script type="text/javascript">
+            //<![CDATA[
+            function amaTogglePassword(icon) {
+                let input = icon.parentElement.querySelector("input");
+                let oculto = input.type === 'password';
+                input.type = oculto ? 'text' : 'password';
+                icon.textContent = oculto ? 'visibility_off' : 'visibility';
+                icon.setAttribute('aria-label', oculto ? 'Ocultar contraseña' : 'Mostrar contraseña');
+            }
+            //]]>
+        </script>
+    </ui:define>
+</ui:composition>

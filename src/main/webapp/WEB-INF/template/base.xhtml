@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Aquí se inyectará el título que pongas en tus otras páginas -->
+    <title><ui:insert name="title-view">J-Brew App</ui:insert></title>
+
+    <!-- Aquí se inyectarán los CSS extra de tus otras páginas -->
+    <ui:insert name="head"/>
+</h:head>
+
+<h:body>
+    <!-- Aquí se inyectará todo el contenido central de resultados.xhtml -->
+    <ui:insert name="content"/>
+</h:body>
+
+</html>

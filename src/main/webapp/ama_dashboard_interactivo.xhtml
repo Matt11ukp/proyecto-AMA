@@ -1,0 +1,126 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core">
+
+    <!-- Lee ?usuario=... de la URL (lo agrega el enlace "Ver Reporte" del Directorio)
+         y lo asigna a dashboardBean.usuario ANTES de que se ejecute @PostConstruct -->
+    <f:metadata>
+        <f:viewParam name="usuario" value="#{dashboardBean.usuario}" />
+        <!-- Se ejecuta en la fase Invoke Application, YA con dashboardBean.usuario
+             asignado por el viewParam de arriba (a diferencia de @PostConstruct,
+             que corre antes de que el viewParam pueda setear el valor). -->
+        <f:viewAction action="#{dashboardBean.cargarDatos}" />
+    </f:metadata>
+
+    <ui:param name="mostrarSidebar" value="true" />
+    <ui:param name="vistaActiva" value="dashboard" />
+    <ui:define name="title-view">AMA - Dashboard de Evaluaciones</ui:define>
+
+    <ui:define name="head">
+        <style>
+            .pixel-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+            .pixel-border { border: 2px solid #1b1b1b; }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="max-w-container-max mx-auto text-on-background font-body-md pb-12">
+
+            <!-- Header del Paciente -->
+            <header class="bg-surface border-2 border-on-background pixel-shadow p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-6">
+
+                    <!-- ── SECCIÓN AVATAR PIXEL ART ÚNICO (DICEBEAR API) ── -->
+                    <div class="w-20 h-20 bg-secondary-container border-2 border-on-background pixel-shadow overflow-hidden flex-shrink-0 flex items-center justify-center">
+                        <img class="w-full h-full object-cover"
+                             src="https://api.dicebear.com/7.x/pixel-art/svg?seed=#{dashboardBean.pacienteNombre}&amp;backgroundColor=transparent"
+                             alt="Avatar de #{dashboardBean.pacienteNombre}"/>
+                    </div>
+                    <!-- ─────────────────────────────────────────────────── -->
+
+                    <div>
+                        <h2 class="font-headline-lg text-2xl md:text-3xl uppercase text-on-background font-bold mb-1">
+                            <h:outputText value="#{dashboardBean.pacienteNombre}" />
+                        </h2>
+                        <div class="flex flex-wrap items-center gap-4 text-sm text-on-surface-variant font-bold">
+                            <span>Edad: <h:outputText value="#{dashboardBean.pacienteEdad}" /> años</span>
+                            <span>|</span>
+                            <span>Última eval: <h:outputText value="#{dashboardBean.pacienteUltimaEval}" /></span>
+                            <span>|</span>
+                            <span class="px-2 py-0.5 bg-tertiary text-white border border-on-background text-xs uppercase">
+                                Estado: <h:outputText value="#{dashboardBean.tieneEvaluaciones ? 'Completado' : 'Pendiente'}" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h:commandButton value="DESCARGAR PDF" class="bg-primary text-white border-2 border-on-background px-6 py-3 font-bold uppercase pixel-shadow cursor-pointer hover:bg-primary-container hover:text-on-primary-container transition-all"/>
+                </div>
+            </header>
+
+            <!-- Leyenda superior -->
+            <div class="flex justify-between items-center mb-6 px-2">
+                <span class="font-bold uppercase tracking-widest text-sm">Resultados Interactivos</span>
+                <div class="flex gap-4 text-xs font-bold">
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-tertiary-fixed border border-black inline-block"></span> Óptimo</span>
+                    <span class="flex items-center gap-1"><span class="w-3 h-3 bg-error-container border border-black inline-block"></span> Riesgo</span>
+                </div>
+            </div>
+
+            <!-- Contenedor de los Tests -->
+            <div class="space-y-6">
+                <ui:repeat value="#{dashboardBean.modulos}" var="modulo">
+                    <div class="bg-surface border-2 border-on-background pixel-shadow p-6">
+                        <div class="flex justify-between items-center pb-4 border-b-2 border-on-background mb-4">
+                            <span class="font-bold uppercase text-primary"><h:outputText value="#{modulo.etiqueta}" /></span>
+                            <span class="material-symbols-outlined">expand_more</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                            <div class="border-l-4 border-primary pl-3">
+                                <p class="text-xs uppercase text-on-surface-variant font-bold">Tiempo</p>
+                                <p class="font-bold text-lg"><h:outputText value="#{modulo.tiempo}" /></p>
+                            </div>
+                            <div class="border-l-4 border-tertiary pl-3">
+                                <p class="text-xs uppercase text-on-surface-variant font-bold">Aciertos</p>
+                                <p class="font-bold text-lg"><h:outputText value="#{modulo.aciertos}" /> / <h:outputText value="#{modulo.total}" /></p>
+                            </div>
+                            <div class="border-l-4 border-error pl-3">
+                                <p class="text-xs uppercase text-on-surface-variant font-bold">Errores</p>
+                                <p class="font-bold text-lg"><h:outputText value="#{modulo.errores}" /></p>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+
+                <!-- Mensaje cuando el estudiante aún no tiene pruebas registradas -->
+                <h:panelGroup rendered="#{not dashboardBean.tieneEvaluaciones}">
+                    <div class="bg-surface-container border-2 border-dashed border-on-background p-6 text-center text-on-surface-variant font-bold">
+                        Este estudiante aún no tiene evaluaciones registradas en el sistema.
+                    </div>
+                </h:panelGroup>
+            </div>
+
+            <!-- Resumen Diagnóstico -->
+            <section class="mt-10 bg-primary-container border-2 border-on-background pixel-shadow p-6">
+                <h3 class="font-bold uppercase text-on-primary-container text-lg mb-4">Resumen Diagnóstico Global</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-on-primary-container font-bold">
+                    <div class="bg-surface p-4 border-2 border-on-background">
+                        <p class="text-xs uppercase">Atención Sostenida</p>
+                        <p class="text-2xl"><h:outputText value="#{dashboardBean.atencionPorcentaje}" />%</p>
+                    </div>
+                    <div class="bg-surface p-4 border-2 border-on-background">
+                        <p class="text-xs uppercase">Precisión Cognitiva</p>
+                        <p class="text-2xl"><h:outputText value="#{dashboardBean.precisionPorcentaje}" />%</p>
+                    </div>
+                    <div class="bg-surface p-4 border-2 border-on-background">
+                        <p class="text-xs uppercase">Rapidez de Procesamiento</p>
+                        <p class="text-2xl"><h:outputText value="#{dashboardBean.rapidezPorcentaje}" />%</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </ui:define>
+</ui:composition>

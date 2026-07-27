@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core"
+      xml:lang="es" lang="es">
+
+<h:head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title><ui:insert name="title-view">AMA - Sistema</ui:insert></title>
+
+    <!-- Tailwind CSS con plugins de formularios y contenedores -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+
+    <!-- CONFIGURACIÓN GLOBAL DE TAILWIND (Mantiene el diseño exacto de tus maquetas) -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-error-container": "#93000a",
+                        "outline": "#837376",
+                        "tertiary-fixed": "#b1f2b8",
+                        "tertiary": "#2e6a3d",
+                        "surface-container-high": "#e8e8e8",
+                        "surface": "#f9f9f9",
+                        "on-primary-container": "#764351",
+                        "primary": "#844f5d",
+                        "on-surface": "#1b1b1b",
+                        "on-secondary-fixed": "#3f0116",
+                        "on-background": "#1b1b1b",
+                        "surface-container-highest": "#e2e2e2",
+                        "secondary-fixed": "#ffd9df",
+                        "inverse-primary": "#f8b4c4",
+                        "surface-tint": "#844f5d",
+                        "tertiary-fixed-dim": "#96d59e",
+                        "tertiary-container": "#95d59d",
+                        "on-primary-fixed": "#350d1b",
+                        "secondary-fixed-dim": "#ffb1c0",
+                        "primary-fixed-dim": "#f8b4c4",
+                        "inverse-surface": "#303030",
+                        "surface-container": "#eeeeee",
+                        "on-tertiary-container": "#215d31",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#693845",
+                        "background": "#f9f9f9",
+                        "secondary-container": "#fd99ad",
+                        "primary-fixed": "#ffd9e0",
+                        "on-tertiary-fixed-variant": "#125227",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-fixed": "#00210a",
+                        "on-secondary-fixed-variant": "#782d40",
+                        "surface-dim": "#dadada",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#d5c2c5",
+                        "surface-variant": "#e2e2e2",
+                        "secondary": "#954457",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "on-surface-variant": "#514346",
+                        "surface-bright": "#f9f9f9",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#f8b4c4",
+                        "on-secondary-container": "#792d41",
+                        "error": "#ba1a1a"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Courier Prime"],
+                        "body-md": ["Courier Prime"],
+                        "headline-md": ["Courier Prime"],
+                        "headline-lg": ["Courier Prime"],
+                        "body-lg": ["Courier Prime"]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Courier Prime', monospace !important;
+            background-color: #f9f9f9;
+            color: #1b1b1b;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eeeeee;
+            border-left: 2px solid #1b1b1b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #844f5d;
+            border: 2px solid #1b1b1b;
+        }
+    </style>
+
+    <!-- JS plano compartido por el layout (sidebar, mostrar/ocultar contraseña, etc.) -->
+    <h:outputScript name="js/ama.js" target="head" />
+
+    <ui:insert name="head"/>
+</h:head>
+
+<h:body class="bg-background text-on-background">
+
+    <!-- Sidebar Lateral Condicional -->
+    <ui:fragment rendered="#{not empty mostrarSidebar and mostrarSidebar}">
+        <aside class="fixed left-0 top-0 h-full flex flex-col p-1 bg-surface-container-low w-64 border-r-4 border-on-background shadow-[4px_0px_0px_0px_rgba(0,0,0,1)] z-50">
+            <div class="p-4 mb-6">
+                <div class="font-headline-md text-2xl text-primary mb-1">AMA</div>
+                <div class="h-1 w-12 bg-on-background"></div>
+            </div>
+
+            <div class="px-4 py-6 border-b-2 border-on-background mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-secondary-container border-2 border-on-background shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+                        <span class="material-symbols-outlined text-on-secondary-container">person</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-sm text-on-surface">Dr. Especialista</p>
+                        <p class="text-[10px] text-on-surface-variant uppercase">Panel de Control</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú Limpio: Se quitaron Evaluaciones e Informes -->
+            <nav class="flex-grow flex flex-col gap-2 px-2">
+                <h:link outcome="/ama_directorio_de_estudiantes.xhtml"
+                        styleClass="flex items-center gap-3 p-3 transition-all border-2 #{vistaActiva == 'directorio' ? 'bg-secondary-container text-on-secondary-container border-on-background shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] translate-x-[-2px]' : 'text-on-surface-variant border-transparent hover:border-on-background hover:bg-surface-container-highest'}">
+                    <span class="material-symbols-outlined">group</span>
+                    <span class="font-bold text-sm">Pacientes</span>
+                </h:link>
+            </nav>
+
+            <!-- Menú Inferior: Se quitó Configuración -->
+            <div class="mt-auto flex flex-col gap-2 p-2 border-t-2 border-on-background">
+                <h:link outcome="/ama_acceso_especialistas.xhtml" styleClass="flex items-center gap-3 p-3 transition-all text-on-surface-variant border-2 border-transparent hover:border-on-background hover:bg-surface-container-highest">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span class="font-bold text-sm">Cerrar Sesión</span>
+                </h:link>
+            </div>
+        </aside>
+    </ui:fragment>
+
+    <!-- Contenido Principal -->
+    <div class="#{not empty mostrarSidebar and mostrarSidebar ? 'ml-64 p-6' : 'p-0'} min-h-screen">
+        <ui:insert name="content"/>
+    </div>
+
+</h:body>
+</html>

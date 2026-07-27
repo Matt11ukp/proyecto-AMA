@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.0">
+
+    <persistence-unit name="jbrewPU" transaction-type="JTA">
+        <jta-data-source>jdbc/jbrewDS</jta-data-source>
+        <class>unl.edu.ec.ama.data.entity.GameResultEntity</class>
+        <class>unl.edu.ec.ama.data.entity.EspecialistaEntity</class>
+        <class>unl.edu.ec.ama.data.entity.User</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <properties>
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+            <property name="eclipselink.logging.level" value="INFO"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

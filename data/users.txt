@@ -1,0 +1,24 @@
+nombre: matias
+edad: 01/01/2006
+grado: 2
+skin: 0
+cabello: 14
+camisa: 5
+ojos: 8
+femenino: false
+monedas: 0
+llaves: 0
+vida: 6
+
+nombre: Freddy
+edad: 24/06/2007
+grado: 2
+skin: 0
+cabello: 0
+camisa: 0
+ojos: 0
+femenino: false
+monedas: 0
+llaves: 0
+vida: 6
+

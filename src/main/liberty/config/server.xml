@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<server description="defaultServer">
+    <!--The Liberty Maven Plugin has generated Liberty features necessary for your application in configDropins/overrides/generated-features.xml-->
+    <featureManager>
+        <feature>webProfile-10.0</feature>
+    </featureManager>
+    <basicRegistry id="defaultBasicRegistry" realm="BasicRealm">
+        <user name="username" password="password"/>
+    </basicRegistry>
+    <keyStore id="defaultKeyStore" password="password"/>
+    <httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+    <featureManager>
+        <feature>webProfile-10.0</feature>
+    </featureManager>
+
+    <library id="postgresJDBCLib">
+        <fileset dir="${server.config.dir}/resources/jdbc" includes="postgresql.jar"/>
+    </library>
+
+    <jdbcDriver id="postgresDriver" libraryRef="postgresJDBCLib"/>
+
+    <dataSource id="jbrewDS" jndiName="jdbc/jbrewDS" jdbcDriverRef="postgresDriver">
+        <properties.postgresql
+                serverName="ama-pg-db"
+                portNumber="5432"
+                databaseName="${env.DB_NAME}"
+                user="${env.DB_USER}"
+                password="${env.DB_PASSWORD}"/>
+    </dataSource>
+    <webApplication contextRoot="/jbrew" location="jbrew-web.war"/>
+
+    <!-- Configuración de salidas de log del server -->
+    <!-- Configuración de logging -->
+    <logging consoleFormat="SIMPLE" consoleLogLevel="INFO" isoDateFormat="true" maxFileSize="100" maxFiles="5" messageFormat="SIMPLE" messageSource="message,trace,accessLog" traceSpecification="*=info:unl.edu.*=fine,eclipselink.sql=all"/>
+
+</server>

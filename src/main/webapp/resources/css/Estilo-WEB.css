@@ -1,0 +1,884 @@
+/* ============================================================
+   AMA - Estilos de la pantalla de resultados
+   Estética Pixel Art / 8-bit retro
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:root {
+    --color-on-secondary: #ffffff;
+    --color-secondary-fixed: #ffd9df;
+    --color-surface-tint: #844f5d;
+    --color-error-container: #ffdad6;
+    --color-error: #ba1a1a;
+    --color-on-surface-variant: #514346;
+    --color-on-primary-container: #764351;
+    --color-surface-variant: #eae0e2;
+    --color-surface: #fff8f8;
+    --color-outline-variant: #d5c2c5;
+    --color-surface-container-low: #fbf1f3;
+    --color-surface-container-highest: #eae0e2;
+    --color-on-surface: #1f1a1c;
+    --color-on-background: #1f1a1c;
+    --color-background: #fff8f8;
+    --color-primary: #844f5d;
+    --color-outline: #837376;
+    --color-secondary: #954457;
+    --color-surface-container-high: #efe6e8;
+    --color-secondary-container: #fd99ad;
+    --color-surface-container: #f5ebed;
+    --color-card-bg: #fdf3f5;
+    --color-title-pink: #f8b4c4;
+    --color-footer-pink: #d87a8e;
+    --color-success: #4caf50;
+    --color-fail: #f44336;
+
+    /* Tokens adicionales del sistema "Neo-Classic Pixel" (portal especialistas) */
+    --color-tertiary: #2e6a3d;
+    --color-tertiary-container: #95d59d;
+    --color-on-tertiary-container: #215d31;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-highest: #e2e2e2;
+    --color-primary-fixed: #ffd9e0;
+    --color-on-secondary-container: #792d41;
+    --color-accent: #d87a8e;
+    --color-on-accent: #ffffff;
+
+    --font-headline: "Press Start 2P", monospace;
+    --font-label: "VT323", monospace;
+
+    --spacing-margin-mobile: 16px;
+    --spacing-margin-desktop: 48px;
+    --spacing-gutter: 24px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body.ama-body {
+    background-color: var(--color-surface);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-label);
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--color-on-surface);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Utilidades pixel art ---------- */
+
+.pixel-border {
+    border: 4px solid #000000;
+}
+
+.pixel-shadow {
+    box-shadow: 8px 8px 0px #000000;
+}
+
+.pixel-shadow-sm {
+    box-shadow: 4px 4px 0px #000000;
+}
+
+.pixel-text-shadow {
+    text-shadow: 4px 4px 0px #000000;
+}
+
+/* ---------- Encabezado ---------- */
+
+.ama-header {
+    background-color: var(--color-background);
+    border-bottom: 4px solid var(--color-on-surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    padding-left: var(--spacing-margin-mobile);
+    padding-right: var(--spacing-margin-mobile);
+}
+
+.ama-title {
+    font-family: var(--font-headline);
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-title-pink);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.ama-subtitle {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-on-surface);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .ama-header {
+        padding-left: var(--spacing-margin-desktop);
+        padding-right: var(--spacing-margin-desktop);
+    }
+    .ama-title {
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: -0.02em;
+    }
+}
+
+/* ---------- Contenido principal ---------- */
+
+.ama-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-margin-mobile);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .ama-main {
+        padding: var(--spacing-margin-desktop);
+    }
+}
+
+.ama-card {
+    background-color: var(--color-card-bg);
+    width: 100%;
+    max-width: 56rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .ama-card {
+        padding: 3rem;
+        margin-top: 4rem;
+    }
+}
+
+.ama-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .ama-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-gutter);
+    }
+}
+
+/* ---------- Tarjetas de estadísticas ---------- */
+
+.ama-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: var(--color-surface);
+    transition: transform 0.2s ease-in-out;
+}
+
+.ama-stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.ama-stat-icon {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    font-variation-settings: 'FILL' 1;
+    transition: transform 0.2s ease-in-out;
+}
+
+.ama-stat-card:hover .ama-stat-icon {
+    transform: scale(1.1);
+}
+
+.ama-stat-icon--neutral {
+    color: var(--color-on-surface);
+}
+
+.ama-stat-icon--success {
+    color: var(--color-success);
+}
+
+.ama-stat-icon--fail {
+    color: var(--color-fail);
+}
+
+.ama-stat-label {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-on-surface);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.ama-stat-value {
+    font-family: var(--font-headline);
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-on-surface);
+}
+
+.ama-stat-value--success {
+    color: var(--color-success);
+}
+
+.ama-stat-value--fail {
+    color: var(--color-fail);
+}
+
+/* ---------- Pie de página ---------- */
+
+.ama-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem var(--spacing-margin-mobile);
+    background-color: var(--color-background);
+    border-top: 4px solid var(--color-on-surface);
+}
+
+.ama-footer-text {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: var(--color-footer-pink);
+}
+
+.ama-footer-spacer {
+    height: 6rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .ama-footer-spacer {
+        height: 8rem;
+    }
+}
+
+/* ============================================================
+   NUEVO: BARRA DE PERFIL DEL JUGADOR (Estilo 8-bit)
+   ============================================================ */
+
+/* Contenedor principal de la barra retro */
+.ama-player-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background-color: var(--color-surface);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Efecto hover consistente con tus tarjetas de estadísticas */
+.ama-player-bar:hover {
+    transform: translateY(-2px);
+}
+
+/* Bloque individual de icono + etiqueta + valor */
+.ama-player-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Texto de la etiqueta ("JUGADOR:", "PRUEBA:") */
+.ama-player-label {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-on-surface);
+    text-transform: uppercase;
+}
+
+/* Valor resaltado (ej: "MATIAS", "VISUAL") */
+.ama-player-value {
+    font-family: var(--font-label);
+    font-size: 24px;
+    line-height: 24px;
+    color: var(--color-primary); /* Usamos tu rosa/vino principal para destacar el dato */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Separador retro "|" entre jugador y prueba */
+.ama-player-divider {
+    font-family: var(--font-headline);
+    font-size: 16px;
+    color: var(--color-footer-pink);
+    font-weight: bold;
+}
+
+/* Borde pixelado delgado (2px) para no competir con el borde de 4px de la tarjeta principal */
+.pixel-border-sm {
+    border: 2px solid var(--color-on-surface);
+}
+
+/* Ajuste responsive para pantallas móviles */
+@media (max-width: 600px) {
+    .ama-player-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    .ama-player-divider {
+        display: none; /* Ocultamos el "|" vertical en celular para que se apilen limpiamente */
+    }
+}
+
+/* ============================================================
+   PORTAL ESPECIALISTAS - Layout base (template.xhtml)
+   Topbar (zona pública) + Sidebar (zona autenticada)
+   ============================================================ */
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    vertical-align: middle;
+}
+
+/* ---------- Utilidades de borde/sombra pixel (genéricas) ---------- */
+
+.pixel-border-2 {
+    border: 2px solid var(--color-on-surface);
+}
+
+.pixel-border-4 {
+    border: 4px solid var(--color-on-surface);
+}
+
+/* ---------- Botones ---------- */
+
+.ama-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 1.5rem;
+    border: 2px solid var(--color-on-surface);
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    cursor: pointer;
+    box-shadow: 4px 4px 0px 0px #000000;
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, background-color 0.15s ease-in-out;
+    text-decoration: none;
+}
+
+.ama-btn:hover {
+    background-color: var(--color-primary-container, var(--color-secondary-container));
+}
+
+.ama-btn:active,
+.ama-btn.ama-btn--pressed {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px #000000;
+}
+
+.ama-btn--primary {
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+}
+
+.ama-btn--primary:hover {
+    background-color: var(--color-secondary);
+}
+
+.ama-btn--outline {
+    background-color: var(--color-surface-container-lowest);
+}
+
+.ama-btn--block {
+    width: 100%;
+}
+
+.ama-btn--sm {
+    padding: 0.5rem 0.9rem;
+    box-shadow: 2px 2px 0px 0px #000000;
+}
+
+/* ---------- Campos de formulario ---------- */
+
+.ama-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.ama-label {
+    font-family: var(--font-headline);
+    font-size: 11px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.ama-input,
+.ama-input .ui-inputtext,
+input.ama-input {
+    width: 100%;
+    font-family: var(--font-label);
+    font-size: 18px;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--color-on-surface);
+    background-color: var(--color-surface);
+    box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.1);
+    color: var(--color-on-surface);
+}
+
+.ama-input:focus,
+.ama-input .ui-inputtext:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: inset 2px 2px 0px 0px rgba(0, 0, 0, 0.1), 0 0 0 2px var(--color-secondary-container);
+}
+
+/* ---------- Badges / Chips de estado ---------- */
+
+.ama-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.6rem;
+    font-family: var(--font-headline);
+    font-size: 10px;
+    text-transform: uppercase;
+    border: 2px solid var(--color-on-surface);
+}
+
+.ama-badge--success {
+    background-color: var(--color-tertiary-container);
+    color: var(--color-on-tertiary-container);
+}
+
+.ama-badge--warning {
+    background-color: var(--color-secondary-fixed);
+    color: var(--color-on-secondary-container);
+}
+
+.ama-badge--risk {
+    background-color: var(--color-error-container);
+    color: var(--color-error);
+}
+
+/* ---------- Topbar (zona pública: Inicio / Login) ---------- */
+
+.ama-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem var(--spacing-margin-mobile);
+    background-color: var(--color-background);
+    border-bottom: 4px solid var(--color-on-surface);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+@media (min-width: 768px) {
+    .ama-topbar {
+        padding: 1rem var(--spacing-margin-desktop);
+    }
+}
+
+.ama-topbar-brand {
+    font-family: var(--font-headline);
+    font-size: 18px;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.ama-topbar-nav {
+    display: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .ama-topbar-nav {
+        display: flex;
+    }
+}
+
+.ama-topbar-link {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+    text-decoration: none;
+    padding: 0.25rem;
+}
+
+.ama-topbar-link:hover {
+    background-color: var(--color-primary-container, var(--color-secondary-container));
+    color: var(--color-on-primary-container);
+}
+
+.ama-topbar-link--active {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+}
+
+/* ---------- Pie de página de sitio (zona pública) ---------- */
+
+.ama-page-footer {
+    background-color: var(--color-surface-dim, var(--color-surface-container));
+    border-top: 4px solid var(--color-on-surface);
+    padding: 2rem var(--spacing-margin-mobile);
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .ama-page-footer {
+        padding: 2rem var(--spacing-margin-desktop);
+    }
+}
+
+.ama-page-footer-text {
+    font-family: var(--font-label);
+    font-size: 14px;
+    color: var(--color-on-surface-variant);
+}
+
+/* ---------- Sidebar (zona autenticada: Dashboard / Directorio) ---------- */
+
+.ama-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 260px;
+    background-color: var(--color-surface-container-low);
+    border-right: 4px solid var(--color-on-surface);
+    box-shadow: 4px 0px 0px 0px #000000;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    overflow-y: auto;
+    transition: transform 0.2s ease-in-out;
+}
+
+.ama-sidebar-brand {
+    font-family: var(--font-headline);
+    font-size: 18px;
+    color: var(--color-primary);
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.ama-sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 0.75rem;
+    border-bottom: 2px solid var(--color-on-surface);
+    margin-bottom: 1rem;
+}
+
+.ama-sidebar-avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secondary-container);
+    border: 2px solid var(--color-on-surface);
+    flex-shrink: 0;
+}
+
+.ama-sidebar-profile-name {
+    font-family: var(--font-label);
+    font-size: 16px;
+    line-height: 18px;
+    color: var(--color-on-surface);
+}
+
+.ama-sidebar-profile-role {
+    font-family: var(--font-headline);
+    font-size: 9px;
+    text-transform: uppercase;
+    color: var(--color-on-surface-variant);
+}
+
+.ama-sidebar-nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ama-sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    font-family: var(--font-headline);
+    font-size: 11px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-on-surface-variant);
+    border: 2px solid transparent;
+}
+
+.ama-sidebar-link:hover {
+    border-color: var(--color-on-surface);
+    background-color: var(--color-surface-container-highest);
+}
+
+.ama-sidebar-link--active {
+    background-color: var(--color-secondary-container);
+    color: var(--color-on-secondary-container);
+    border-color: var(--color-on-surface);
+    box-shadow: 2px 2px 0px 0px #000000;
+}
+
+.ama-sidebar-footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 2px solid var(--color-outline-variant);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Botón hamburguesa (solo visible en móvil) */
+.ama-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--color-on-surface);
+    background-color: var(--color-surface);
+    box-shadow: 4px 4px 0px 0px #000000;
+    cursor: pointer;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 60;
+}
+
+@media (min-width: 1024px) {
+    .ama-sidebar-toggle {
+        display: none;
+    }
+}
+
+@media (max-width: 1023px) {
+    .ama-sidebar {
+        transform: translateX(-100%);
+    }
+    .ama-sidebar.ama-sidebar--open {
+        transform: translateX(0);
+    }
+}
+
+/* ---------- Shell para pantallas "transaccionales" sin nav (ej. Login) ---------- */
+
+.ama-auth-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-margin-mobile);
+    background-color: #fdf3f5;
+}
+
+.ama-auth-container {
+    width: 100%;
+    max-width: 448px;
+}
+
+.ama-auth-brand {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.ama-auth-brand-chip {
+    background-color: var(--color-primary-container, var(--color-secondary-container));
+    padding: 0.5rem 1.5rem;
+}
+
+.ama-auth-brand-chip h1 {
+    font-family: var(--font-headline);
+    font-size: 28px;
+    margin: 0;
+    letter-spacing: -1px;
+}
+
+.ama-auth-card {
+    background-color: var(--color-surface-container-lowest);
+    border: 4px solid var(--color-on-surface);
+    box-shadow: 4px 4px 0px 0px #000000;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .ama-auth-card {
+        padding: 2.5rem;
+    }
+}
+
+.ama-auth-card-header {
+    border-bottom: 2px solid var(--color-on-surface);
+    padding-bottom: 1rem;
+}
+
+.ama-auth-card-header h2 {
+    font-family: var(--font-headline);
+    font-size: 20px;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.ama-auth-card-header p {
+    font-family: var(--font-label);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-on-surface-variant);
+    margin: 0.5rem 0 0;
+}
+
+.ama-auth-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -0.5rem;
+}
+
+.ama-auth-remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-label);
+    font-size: 13px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.ama-auth-remember input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-on-surface);
+    border: 2px solid var(--color-on-surface);
+}
+
+.ama-auth-forgot {
+    font-family: var(--font-label);
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    color: var(--color-on-surface);
+}
+
+.ama-auth-forgot:hover {
+    color: var(--color-primary);
+}
+
+.ama-auth-footer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.ama-auth-footer p {
+    font-family: var(--font-label);
+    font-size: 14px;
+    color: var(--color-on-surface-variant);
+    margin: 0 0 1rem;
+}
+
+.ama-auth-footer-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.ama-auth-footer-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-surface-container-highest);
+    border: 2px solid var(--color-on-surface);
+    box-shadow: 2px 2px 0px 0px #000000;
+}
+
+/* ---------- Contenedor principal cuando hay sidebar ---------- */
+
+.ama-layout--sidebar {
+    min-height: 100vh;
+}
+
+.ama-content {
+    padding: var(--spacing-margin-mobile);
+}
+
+@media (min-width: 768px) {
+    .ama-content {
+        padding: var(--spacing-margin-desktop);
+    }
+}
+
+@media (min-width: 1024px) {
+    .ama-content {
+        margin-left: 260px;
+    }
+}
+
+.ama-content-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}

@@ -1,0 +1,162 @@
+<ui:composition template="/WEB-INF/template/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets">
+
+    <ui:param name="mostrarSidebar" value="false" />
+    <ui:param name="vistaActiva" value="inicio" />
+    <ui:define name="title-view">AMA - Asistente de Medición de Aprendizaje</ui:define>
+
+    <ui:define name="head">
+        <style>
+            .pixel-shadow { box-shadow: 4px 4px 0px 0px rgba(0,0,0,1); }
+            .pixel-shadow-lg { box-shadow: 8px 8px 0px 0px rgba(0,0,0,1); }
+            .progress-block { width: 12px; height: 24px; background-color: #844f5d; border: 1px solid #000; }
+            @keyframes pulse-pixel { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+            .animate-pixel-pulse { animation: pulse-pixel 2s steps(2, start) infinite; }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <!-- TopNavBar de la Landing Page (Limpia sin enlaces muertos) -->
+        <header class="flex justify-between items-center px-6 py-4 w-full bg-surface border-b-4 border-on-background shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+                <span class="font-headline-lg text-2xl font-bold text-on-surface">AMA</span>
+            </div>
+            <nav class="hidden md:flex gap-8">
+                <h:link outcome="/ama_inicio.xhtml" styleClass="font-headline-md text-primary underline decoration-4 underline-offset-8 font-bold">Inicio</h:link>
+            </nav>
+            <h:link outcome="/ama_acceso_especialistas.xhtml" styleClass="bg-[#D87A8E] text-white border-2 border-on-background px-6 py-2 pixel-shadow font-bold hover:bg-primary-container hover:text-on-primary-container transition-all active:translate-x-[2px] active:translate-y-[2px] uppercase tracking-wider">
+                Acceso a Especialistas
+            </h:link>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-6 py-12">
+            <!-- Hero Section -->
+            <section class="mb-20 text-center relative">
+                <div class="relative z-10 border-4 border-on-background p-12 bg-surface pixel-shadow-lg inline-block">
+                    <h1 class="font-headline-lg text-5xl md:text-6xl mb-6 text-primary tracking-tighter font-bold">Bienvenido a AMA</h1>
+                    <p class="font-body-lg text-xl md:text-2xl max-w-2xl mx-auto text-on-surface-variant mb-8 leading-relaxed">
+                        El Asistente de Medición de Aprendizaje a través de gamificación retro. Rigor analítico en un entorno interactivo de 16 bits.
+                    </p>
+                    <div class="flex justify-center gap-2 mb-4">
+                        <div class="progress-block"></div>
+                        <div class="progress-block"></div>
+                        <div class="progress-block"></div>
+                        <div class="progress-block opacity-30"></div>
+                        <div class="progress-block opacity-10"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bento Grid Explanatory Cards (3 Módulos Reales con tus imágenes locales) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <!-- Card 1: Test Visual -->
+                <article class="group border-2 border-on-background bg-white p-0 pixel-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="bg-secondary-container p-3 border-b-2 border-on-background flex justify-between items-center">
+                            <span class="font-bold text-xs uppercase tracking-widest text-on-secondary-container">Módulo 01 // Cognitivo</span>
+                            <span class="material-symbols-outlined text-on-secondary-container">visibility</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="w-full h-48 mb-6 border-2 border-on-background overflow-hidden relative grayscale group-hover:grayscale-0 transition-all">
+                                <!-- Imagen local: visual.png -->
+                                <img class="w-full h-full object-cover"
+                                     src="#{request.contextPath}/resources/web/visual.png"
+                                     alt="Test Visual"/>
+                            </div>
+                            <h3 class="font-bold text-xl mb-3 text-on-surface">Test Visual: El Intruso del Bosque</h3>
+                            <p class="text-on-surface-variant leading-tight">Evaluación de discriminación visual y atención selectiva mediante la identificación de patrones anómalos en entornos naturales pixelados.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: Test Verbal -->
+                <article class="group border-2 border-on-background bg-[#F8B4C4] p-0 pixel-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="bg-primary p-3 border-b-2 border-on-background flex justify-between items-center text-white">
+                            <span class="font-bold text-xs uppercase tracking-widest">Módulo 02 // Lenguaje</span>
+                            <span class="material-symbols-outlined">menu_book</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="w-full h-48 mb-6 border-2 border-on-background overflow-hidden relative grayscale group-hover:grayscale-0 transition-all">
+                                <!-- Imagen local: verbal.png -->
+                                <img class="w-full h-full object-cover"
+                                     src="#{request.contextPath}/resources/web/verbal.png"
+                                     alt="Test Verbal"/>
+                            </div>
+                            <h3 class="font-bold text-xl mb-3 text-on-surface">Test Verbal: El Pergamino de las Órdenes</h3>
+                            <p class="text-on-surface-variant leading-tight">Medición de comprensión auditiva y seguimiento de instrucciones complejas a través de un sistema de narrativa lúdica guiada por audio.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3: Test Concentración -->
+                <article class="group border-2 border-on-background bg-surface-container p-0 pixel-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="bg-on-surface-variant p-3 border-b-2 border-on-background flex justify-between items-center text-white">
+                            <span class="font-bold text-xs uppercase tracking-widest">Módulo 03 // Ejecución</span>
+                            <span class="material-symbols-outlined">target</span>
+                        </div>
+                        <div class="p-6">
+                            <div class="w-full h-48 mb-6 border-2 border-on-background overflow-hidden relative grayscale group-hover:grayscale-0 transition-all">
+                                <!-- Imagen local: concentration.png -->
+                                <img class="w-full h-full object-cover"
+                                     src="#{request.contextPath}/resources/web/concentration.png"
+                                     alt="Test Concentración"/>
+                            </div>
+                            <h3 class="font-bold text-xl mb-3 text-on-surface">Test de Concentración: La Escolta Pixelada</h3>
+                            <p class="text-on-surface-variant leading-tight">Evaluación de la atención sostenida, velocidad de reacción y control inhibitorio en entornos de alta velocidad con distractores dinámicos.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Secondary CTA Section (Enfoque Académico/Investigación) -->
+            <section class="border-4 border-on-background p-12 bg-secondary-container pixel-shadow text-center mb-20 relative overflow-hidden">
+                <h2 class="font-bold text-3xl mb-6 relative z-10 text-on-surface">¿Listo para administrar las pruebas?</h2>
+                <p class="text-lg mb-10 text-on-secondary-container max-w-xl mx-auto relative z-10">
+                    Plataforma desarrollada para el registro y monitoreo clínico de estudiantes. Acceda al panel de administración para visualizar métricas, tiempos de respuesta y resultados en tiempo real.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center relative z-10">
+                    <h:link outcome="/ama_acceso_especialistas.xhtml" styleClass="bg-primary text-white border-2 border-on-background px-10 py-4 pixel-shadow font-bold uppercase text-center">
+                        Acceso a Especialistas
+                    </h:link>
+                </div>
+            </section>
+
+            <!-- Stats Grid (Datos Académicos y Técnicos del Sistema) -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20">
+                <div class="border-2 border-on-background p-4 text-center bg-white pixel-shadow">
+                    <div class="font-bold text-primary text-4xl mb-1">3</div>
+                    <div class="font-bold text-xs uppercase">Módulos Clínicos</div>
+                </div>
+                <div class="border-2 border-on-background p-4 text-center bg-white pixel-shadow">
+                    <div class="font-bold text-primary text-4xl mb-1">60 FPS</div>
+                    <div class="font-bold text-xs uppercase">Motor Gráfico Java</div>
+                </div>
+                <div class="border-2 border-on-background p-4 text-center bg-white pixel-shadow">
+                    <div class="font-bold text-primary text-4xl mb-1">100%</div>
+                    <div class="font-bold text-xs uppercase">Rigor Analítico</div>
+                </div>
+                <div class="border-2 border-on-background p-4 text-center bg-white pixel-shadow">
+                    <div class="font-bold text-primary text-4xl mb-1">Jakarta</div>
+                    <div class="font-bold text-xs uppercase">Backend EE &amp; JSF</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-surface-dim border-t-4 border-on-background py-12 px-6">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+                <div class="max-w-xs">
+                    <span class="font-bold text-3xl mb-4 block text-on-surface">AMA</span>
+                    <p class="text-on-surface-variant text-sm">Redefiniendo la psicometría y el análisis de aprendizaje a través de la estética retro y la ciencia moderna de datos. Herramienta de investigación universitaria.</p>
+                </div>
+            </div>
+            <div class="mt-12 text-center border-t-2 border-outline-variant pt-8">
+                <p class="text-xs font-bold uppercase">© 2026 AMA - ASISTENTE DE MEDICIÓN DE APRENDIZAJE. TODOS LOS DERECHOS RESERVADOS. <span class="animate-pixel-pulse">_</span></p>
+            </div>
+        </footer>
+    </ui:define>
+</ui:composition>

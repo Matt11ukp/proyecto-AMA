@@ -1,0 +1,350 @@
+/* ============================================================
+   AMA - Estilos de la pantalla de resultados
+   Estética Pixel Art / 8-bit retro
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+:root {
+    --color-on-secondary: #ffffff;
+    --color-secondary-fixed: #ffd9df;
+    --color-surface-tint: #844f5d;
+    --color-error-container: #ffdad6;
+    --color-error: #ba1a1a;
+    --color-on-surface-variant: #514346;
+    --color-on-primary-container: #764351;
+    --color-surface-variant: #eae0e2;
+    --color-surface: #fff8f8;
+    --color-outline-variant: #d5c2c5;
+    --color-surface-container-low: #fbf1f3;
+    --color-surface-container-highest: #eae0e2;
+    --color-on-surface: #1f1a1c;
+    --color-on-background: #1f1a1c;
+    --color-background: #fff8f8;
+    --color-primary: #844f5d;
+    --color-outline: #837376;
+    --color-secondary: #954457;
+    --color-surface-container-high: #efe6e8;
+    --color-secondary-container: #fd99ad;
+    --color-surface-container: #f5ebed;
+    --color-card-bg: #fdf3f5;
+    --color-title-pink: #f8b4c4;
+    --color-footer-pink: #d87a8e;
+    --color-success: #4caf50;
+    --color-fail: #f44336;
+
+    --font-headline: "Press Start 2P", monospace;
+    --font-label: "VT323", monospace;
+
+    --spacing-margin-mobile: 16px;
+    --spacing-margin-desktop: 48px;
+    --spacing-gutter: 24px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body.ama-body {
+    background-color: var(--color-surface);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-label);
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--color-on-surface);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Utilidades pixel art ---------- */
+
+.pixel-border {
+    border: 4px solid #000000;
+}
+
+.pixel-shadow {
+    box-shadow: 8px 8px 0px #000000;
+}
+
+.pixel-shadow-sm {
+    box-shadow: 4px 4px 0px #000000;
+}
+
+.pixel-text-shadow {
+    text-shadow: 4px 4px 0px #000000;
+}
+
+/* ---------- Encabezado ---------- */
+
+.ama-header {
+    background-color: var(--color-background);
+    border-bottom: 4px solid var(--color-on-surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    padding-left: var(--spacing-margin-mobile);
+    padding-right: var(--spacing-margin-mobile);
+}
+
+.ama-title {
+    font-family: var(--font-headline);
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-title-pink);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.ama-subtitle {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-on-surface);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .ama-header {
+        padding-left: var(--spacing-margin-desktop);
+        padding-right: var(--spacing-margin-desktop);
+    }
+    .ama-title {
+        font-size: 24px;
+        line-height: 32px;
+        letter-spacing: -0.02em;
+    }
+}
+
+/* ---------- Contenido principal ---------- */
+
+.ama-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-margin-mobile);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .ama-main {
+        padding: var(--spacing-margin-desktop);
+    }
+}
+
+.ama-card {
+    background-color: var(--color-card-bg);
+    width: 100%;
+    max-width: 56rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .ama-card {
+        padding: 3rem;
+        margin-top: 4rem;
+    }
+}
+
+.ama-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .ama-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-gutter);
+    }
+}
+
+/* ---------- Tarjetas de estadísticas ---------- */
+
+.ama-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background-color: var(--color-surface);
+    transition: transform 0.2s ease-in-out;
+}
+
+.ama-stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.ama-stat-icon {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    font-variation-settings: 'FILL' 1;
+    transition: transform 0.2s ease-in-out;
+}
+
+.ama-stat-card:hover .ama-stat-icon {
+    transform: scale(1.1);
+}
+
+.ama-stat-icon--neutral {
+    color: var(--color-on-surface);
+}
+
+.ama-stat-icon--success {
+    color: var(--color-success);
+}
+
+.ama-stat-icon--fail {
+    color: var(--color-fail);
+}
+
+.ama-stat-label {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-on-surface);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.ama-stat-value {
+    font-family: var(--font-headline);
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-on-surface);
+}
+
+.ama-stat-value--success {
+    color: var(--color-success);
+}
+
+.ama-stat-value--fail {
+    color: var(--color-fail);
+}
+
+/* ---------- Pie de página ---------- */
+
+.ama-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem var(--spacing-margin-mobile);
+    background-color: var(--color-background);
+    border-top: 4px solid var(--color-on-surface);
+}
+
+.ama-footer-text {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: var(--color-footer-pink);
+}
+
+.ama-footer-spacer {
+    height: 6rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .ama-footer-spacer {
+        height: 8rem;
+    }
+}
+
+/* ============================================================
+   NUEVO: BARRA DE PERFIL DEL JUGADOR (Estilo 8-bit)
+   ============================================================ */
+
+/* Contenedor principal de la barra retro */
+.ama-player-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background-color: var(--color-surface);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Efecto hover consistente con tus tarjetas de estadísticas */
+.ama-player-bar:hover {
+    transform: translateY(-2px);
+}
+
+/* Bloque individual de icono + etiqueta + valor */
+.ama-player-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Texto de la etiqueta ("JUGADOR:", "PRUEBA:") */
+.ama-player-label {
+    font-family: var(--font-headline);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-on-surface);
+    text-transform: uppercase;
+}
+
+/* Valor resaltado (ej: "MATIAS", "VISUAL") */
+.ama-player-value {
+    font-family: var(--font-label);
+    font-size: 24px;
+    line-height: 24px;
+    color: var(--color-primary); /* Usamos tu rosa/vino principal para destacar el dato */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Separador retro "|" entre jugador y prueba */
+.ama-player-divider {
+    font-family: var(--font-headline);
+    font-size: 16px;
+    color: var(--color-footer-pink);
+    font-weight: bold;
+}
+
+/* Borde pixelado delgado (2px) para no competir con el borde de 4px de la tarjeta principal */
+.pixel-border-sm {
+    border: 2px solid var(--color-on-surface);
+}
+
+/* Ajuste responsive para pantallas móviles */
+@media (max-width: 600px) {
+    .ama-player-bar {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+    .ama-player-divider {
+        display: none; /* Ocultamos el "|" vertical en celular para que se apilen limpiamente */
+    }
+}
