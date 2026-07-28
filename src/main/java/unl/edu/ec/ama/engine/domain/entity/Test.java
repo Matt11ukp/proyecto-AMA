@@ -114,10 +114,16 @@ public abstract class Test {
                         "&mistakes=" + mistakes +
                         "&time=" + tiempoFinal;
 
-        enviarConReintento(cuerpo, 1);
+        // CORRECCIÓN AQUÍ: ya no se dispara en segundo plano. endTest() se queda
+        // esperando aquí (bloqueante) hasta que el POST responda o se agoten los
+        // reintentos. Así, cuando endTest() retorna, el registro YA está confirmado
+        // en Postgres y recién entonces el llamador (Visual/Concentration/Verbal)
+        // hace Desktop.browse(...) hacia resultados.xhtml. Se elimina la carrera
+        // entre el INSERT asíncrono y la apertura del navegador.
+        enviarConReintentoBloqueante(cuerpo, 1);
     }
 
-    private void enviarConReintento(String cuerpo, int intento) {
+    private void enviarConReintentoBloqueante(String cuerpo, int intento) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(ENDPOINT_RESULTADO))
                 .timeout(Duration.ofSeconds(15))
@@ -125,27 +131,30 @@ public abstract class Test {
                 .POST(HttpRequest.BodyPublishers.ofString(cuerpo, StandardCharsets.UTF_8))
                 .build();
 
-        HTTP_CLIENT.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                .thenAccept(response -> {
-                    if (response.statusCode() < 400) {
-                        System.out.println(" [OK] Partida guardada en BD exitosamente (intento " + intento + ").");
-                    } else if (intento < 2) {
-                        System.err.println(" [WARN] Respuesta " + response.statusCode() + ", reintentando...");
-                        enviarConReintento(cuerpo, intento + 1);
-                    } else {
-                        System.err.println(" [ERROR] El servidor respondió con: " + response.statusCode() + " tras " + intento + " intentos.");
-                    }
-                })
-                .exceptionally(e -> {
-                    if (intento < 2) {
-                        System.err.println(" [WARN] Fallo en intento " + intento + " (" + e.getMessage() + "), reintentando...");
-                        enviarConReintento(cuerpo, intento + 1);
-                    } else {
-                        System.err.println(" [ERROR] No se pudo conectar tras " + intento + " intentos.");
-                        System.err.println(" ---> Motivo técnico: " + e.getMessage());
-                    }
-                    return null;
-                });
+        try {
+            // CORRECCIÓN AQUÍ: send() en vez de sendAsync(). Al ser localhost, el
+            // round-trip son unos pocos milisegundos; ese pequeño costo es preferible
+            // a mostrar resultados incorrectos/vacíos en el primer intento.
+            HttpResponse<String> response =
+                    HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() < 400) {
+                System.out.println(" [OK] Partida guardada en BD exitosamente (intento " + intento + ").");
+            } else if (intento < 3) {
+                System.err.println(" [WARN] Respuesta " + response.statusCode() + ", reintentando...");
+                enviarConReintentoBloqueante(cuerpo, intento + 1);
+            } else {
+                System.err.println(" [ERROR] El servidor respondió con: " + response.statusCode() + " tras " + intento + " intentos.");
+            }
+        } catch (Exception e) {
+            if (intento < 3) {
+                System.err.println(" [WARN] Fallo en intento " + intento + " (" + e.getMessage() + "), reintentando...");
+                enviarConReintentoBloqueante(cuerpo, intento + 1);
+            } else {
+                System.err.println(" [ERROR] No se pudo conectar tras " + intento + " intentos.");
+                System.err.println(" ---> Motivo técnico: " + e.getMessage());
+            }
+        }
     }
 
     private static String encode(String value) {

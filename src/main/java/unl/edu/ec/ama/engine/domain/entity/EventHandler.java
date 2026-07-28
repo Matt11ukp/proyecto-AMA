@@ -58,7 +58,7 @@ public class EventHandler {
         }
 
         // --- PORTAL CONCENTRACIÓN (Casilla 21, 4) ---
-        if (hit(gp.player, 21, 4, "any")) { // O como sea que llames a tu función de colisión de evento
+        if (hit(gp.player, 12, 4, "any")) { // O como sea que llames a tu función de colisión de evento
             activePortalType = "CONCENTRATION";
             setPortalEvent(true);
             gp.gameState = GameState.DIALOGUE;
